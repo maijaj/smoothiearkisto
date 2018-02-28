@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Annokset</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+		<h1>Lisää uusi resepti</h1>
+        <h3>Reseptit</h3>
+		<ul>
+            <li th:each="annos: ${annokset}">
+                <span th:text="${annos.nimi}">Essi esimerkki</span>
+            </li>
+        </ul>
+		<br/>
+		<h3>Lisää uusi resepti</h3>
+        <form method="POST" action="/lisaaAnnos">
+				<input type="text" name="nimi"/><br/>
+				<input type="submit" value="Lisää"/>
+		</form>
+		<br/>
+		
+		<h3>Linkit:</h3>
+        <p><a href="/">Palaa etusivulle</a></p>
+		<p><a href="/raakaAineet">Tarkastele ja lisää raaka-aineita</a></p>
+		
+		<p><a href="/">Smoothielistaukseen</a></p>
+    </body>
+</html>

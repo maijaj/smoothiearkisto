@@ -1,11 +1,9 @@
 package tikape.runko.domain;
-
-public class Opiskelija {
-
+public abstract class AbstractNamedObject {
     private Integer id;
     private String nimi;
 
-    public Opiskelija(Integer id, String nimi) {
+    public AbstractNamedObject(Integer id, String nimi) {
         this.id = id;
         this.nimi = nimi;
     }
@@ -24,6 +22,12 @@ public class Opiskelija {
 
     public void setNimi(String nimi) {
         this.nimi = nimi;
+    }  
+    
+    public boolean equals(AbstractNamedObject obj) {
+        if (this.nimi == null || !this.nimi.equals(obj.getNimi())) {
+            return false;
+        }
+        return true;
     }
-
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Resepti</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1 th:text="${annos.nimi}">Annoksen nimi</h1>
+
+        <ul>
+            <li th:each="annosraakaaine: ${annosraakaaineet}">
+				<span th:text="${annosraakaaine}"></span>
+            </li>
+        </ul>
+		<form method="post" action="/annos/:id">
+			<span>Muokattava annos:</span><br/>
+			<select name="annos_id">
+				<option th:each="annos: ${annos}" th:value="${annos.id}" th:text="${annos.nimi}">
+					raaka-aineet
+				</option>
+            </select><br/>
+			<span>Raaka-aine:</span><br/>
+			<select name="raakaaine_id">
+				<option th:each="raakaaine: ${eiannoksessa}" th:value="${raakaaine.id}" th:text="${raakaaine.nimi}">
+					raaka-aineet
+				</option>
+            </select><br/>
+			<span>Järjestys:</span><br/>
+			<input type="number" name="jarjestys"/><br/>
+			<span>Määrä:</span><br/>
+			<input type="number" name="maara"/><br/>
+			<span>Ohje:</span><br/>
+			<input type="text" name="ohje"/><br/>
+			<input type="submit" value="Lisää!"/>
+		</form>
+
+        <p><a href="/lisaaAnnos">Luo uusi smoothie</a></p>
+        <p><a href="/raakaAineet">Tarkastele ja lisää aineksia</a></p>		
+    </body>
+</html>

@@ -19,18 +19,15 @@ public class Database {
     public void init() {
         List<String> lauseet = sqliteLauseet();
 
-        // "try with resources" sulkee resurssin automaattisesti lopuksi
         try (Connection conn = getConnection()) {
             Statement st = conn.createStatement();
 
-            // suoritetaan komennot
             for (String lause : lauseet) {
                 System.out.println("Running command >> " + lause);
                 st.executeUpdate(lause);
             }
 
         } catch (Throwable t) {
-            // jos tietokantataulu on jo olemassa, ei komentoja suoriteta
             System.out.println("Error >> " + t.getMessage());
         }
     }
@@ -38,11 +35,36 @@ public class Database {
     private List<String> sqliteLauseet() {
         ArrayList<String> lista = new ArrayList<>();
 
-        // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        lista.add("CREATE TABLE Opiskelija (id integer PRIMARY KEY, nimi varchar(255));");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Platon');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Aristoteles');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
+        lista.add("CREATE TABLE Annos (\n" +
+                "    id   INTEGER PRIMARY KEY,\n" +
+                "    nimi VARCHAR (90) \n" +
+                ");");
+        lista.add("CREATE TABLE RaakaAine (\n" +
+                "    id   INTEGER PRIMARY KEY,\n" +
+                "    nimi VARCHAR (90) \n" +
+                ");");
+        lista.add("CREATE TABLE AnnosRaakaAine (\n" +
+                "    id           INTEGER      PRIMARY KEY,\n" +
+                "    annos_id     INTEGER      REFERENCES Annos (id),\n" +
+                "    raakaaine_id INTEGER      REFERENCES RaakaAine (id),\n" +
+                "    jarjestys    INTEGER,\n" +
+                "    maara        INTEGER,\n" +
+                "    ohje         VARCHAR (90) \n" +
+                ");");
+        lista.add("INSERT INTO Annos (nimi) VALUES ('Persikkasmoothie');");
+        lista.add("INSERT INTO Annos (nimi) VALUES ('Mansikkasmoothie');");
+        lista.add("INSERT INTO RaakaAine (nimi) VALUES ('Persikka');");
+        lista.add("INSERT INTO RaakaAine (nimi) VALUES ('Mansikka');");
+        lista.add("INSERT INTO RaakaAine (nimi) VALUES ('Banaani');");
+        lista.add("INSERT INTO RaakaAine (nimi) VALUES ('Mustikka');");
+        lista.add("INSERT INTO AnnosRaakaAine (annos_id, raakaaine_id, jarjestys, maara, ohje) "
+                + "VALUES (1, 1, 1, 2, 'Lisää joukkoon');");
+        lista.add("INSERT INTO AnnosRaakaAine (annos_id, raakaaine_id, jarjestys, maara, ohje) "
+                + "VALUES (1, 3, 2, 1, 'Sekoita huolellisesti');");
+        lista.add("INSERT INTO AnnosRaakaAine (annos_id, raakaaine_id, jarjestys, maara, ohje) "
+                + "VALUES (2, 2, 1, 1, 'Lisää joukkoon');");
+        lista.add("INSERT INTO AnnosRaakaAine (annos_id, raakaaine_id, jarjestys, maara, ohje) "
+                + "VALUES (2, 3, 2, 2, 'Lisää joukkoon ja sekoita');");
 
         return lista;
     }
