@@ -10,6 +10,7 @@ import tikape.runko.database.OpiskelijaDao;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        // test
         Database database = new Database("jdbc:sqlite:opiskelijat.db");
         database.init();
 
